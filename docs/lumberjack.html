@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <title>lumberjack.py</title>
+  <link rel="stylesheet" href="pycco.css">
+</head>
+<body>
+<div id="background"></div>
+<div id='container'>
+  
+  <div class='section'>
+    <div class='docs'><h1>lumberjack.py</h1></div>
+  </div>
+  <div class='clearall'>
+  <div class='section' id='section-0'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-0'>#</a>
+      </div>
+      <p><strong>lumberjack</strong> is a Python script for making EPUB3 media overlays
+allows you to step through an EPUB XHTML file while stepping through
+the corresponding audio transcript, in order to synchronise the two.
+Creates the appropriate SMIL files for inclusion in an EPUB 3 book.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-1'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-1'>#</a>
+      </div>
+      <h2><span id="dependencies" href="dependencies"> Dependencies </span></h2>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-2'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-2'>#</a>
+      </div>
+      <p>pygame</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-3'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-3'>#</a>
+      </div>
+      <h2><span id="usage" href="usage"> Usage </span></h2>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-4'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-4'>#</a>
+      </div>
+      <h3><span id="parameters" href="parameters"> Parameters </span></h3>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-5'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-5'>#</a>
+      </div>
+      <p><strong>lumberjack</strong> takes three obligatory command-line options:</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>		</pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-6'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-6'>#</a>
+      </div>
+      <pre><code>lumberjack /path/to/book.epub /path/to/audio.m4a \
+-smil_path= /path/to
+</code></pre>
+<p>OR<br />
+    lumberjack /path/to/book.epub /path/to/audio.m4a 
+    -timeline= /path/to/timeline.xml
+ If given -smil_path , <strong>lumberjack</strong> generates one SMIL file for each input HTML file
+ called 'htmlfilename.html.smil'
+ If given -timeline, <strong>lumberjack</strong> generates a single TEI XML file containg a <timeline>
+ element which describes the timeline.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-7'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-7'>#</a>
+      </div>
+      <p>Unfortunately, pygame doesn't handle AAC/M4A files,
+so <strong>lumberjack</strong> also expects there to be an OGG file with the
+same name as the M4A file (e.g. 'audio.ogg'). This is not ideal.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-8'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-8'>#</a>
+      </div>
+      <p><strong>lumberjack</strong> also takes optional arguments:</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-9'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-9'>#</a>
+      </div>
+      <pre><code>lumberjack book.epub audio.m4a \
+--logto /path/to/logfile.log
+</code></pre>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-10'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-10'>#</a>
+      </div>
+      <p>Absent these arguments, <strong>lumberjack</strong> will output a logfile called
+'audio.m4a.log'</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-11'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-11'>#</a>
+      </div>
+      <p><strong>lumberjack</strong> can also be called with:</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-12'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-12'>#</a>
+      </div>
+      <pre><code>lumberjack book.epub audio.m4a \
+--smil_path /path/to/ \ 
+--uselog /path/to/logfile.log
+</code></pre>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-13'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-13'>#</a>
+      </div>
+      <p>in which case it doesn't enter interactive logging mode, and just converts# the log file to SMIL files</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-14'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-14'>#</a>
+      </div>
+      <h3><span id="input" href="input"> Input </span></h3>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-15'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-15'>#</a>
+      </div>
+      <p><strong>lumberjack</strong> expects to be given an EPUB2/3 format file and an AAC/M4A
+audio file (also, as noted above, an OGG audio file)
+Within the EPUB file, it expects to find one or more properly-declared
+XHTML files, in which certain <div>s (those to be logged) have 'id'
+attributes and belong to the class 'identifiable' </p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-16'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-16'>#</a>
+      </div>
+      <p>Note that in the EPUB, the audio file is expected to be directly
+inside the 'OEBPS' (or whatever) folder, the same as the XHTML files
+you can edit the SMIL files manually to change this.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre> </pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-17'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-17'>#</a>
+      </div>
+      <h3><span id="output" href="output"> Output </span></h3>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-18'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-18'>#</a>
+      </div>
+      <p>Output is in two formats:</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-19'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-19'>#</a>
+      </div>
+      <p>A logfile (with extension .log) is generated during logging. This is a
+tsv (Tab-separated values) file, of the format
+    Start Position  End Position    Element id  Element text    File name   File count
+this format is compatible with, and can be imported into Audacity</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-20'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-20'>#</a>
+      </div>
+      <p>SMIL files (with extension .smil). One file for each HTML file in
+the EPUB. This has the format specified in the
+<a href="http://idpf.org/epub/30/spec/epub30-mediaoverlays.html#sec-overlay-docs">EPUB3 specification</a>.
+In essence, there is one <par> element for each log, which links a
+section of text to a section of the audio file</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-21'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-21'>#</a>
+      </div>
+      <h3><span id="during-logging" href="during-logging"> During logging </span></h3>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-22'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-22'>#</a>
+      </div>
+      <ul>
+<li>Press space to log the end of the section displayed on the screen</li>
+<li>Press q to quit</li>
+<li>Press p to pause</li>
+<li>Press any other key to log a warning to file, 
+along with the current timestamp</li>
+</ul>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="kn">from</span> <span class="nn">xml.dom.minidom</span> <span class="kn">import</span> <span class="n">parse</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">listdir</span>
+<span class="kn">import</span> <span class="nn">string</span>
+<span class="kn">import</span> <span class="nn">codecs</span>
+<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">zipfile</span>
+
+
+<span class="kn">import</span> <span class="nn">pygame.mixer</span> <span class="kn">as</span> <span class="nn">mixer</span>
+<span class="kn">import</span> <span class="nn">pygame.time</span> <span class="kn">as</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">pygame.key</span> <span class="kn">as</span> <span class="nn">key</span>
+<span class="kn">import</span> <span class="nn">pygame</span>
+<span class="kn">from</span> <span class="nn">pygame</span> <span class="kn">import</span> <span class="n">KEYDOWN</span><span class="p">,</span> <span class="n">K_SPACE</span><span class="p">,</span> <span class="n">K_q</span><span class="p">,</span> <span class="n">K_p</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-23'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-23'>#</a>
+      </div>
+      <p>Gets all the elements which could have corresponding audio from an EPUB folder
+ Note: the EPUB must be unzipped, and epub_path should be the root folder of the EPUB,
+ i.e., the folder that contains the manifest file and META-INF folder</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-24'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-24'>#</a>
+      </div>
+      <p>Helper function which recursively extracts text from an XML node and its children</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>	<span class="k">def</span> <span class="nf">flatten_node</span><span class="p">(</span><span class="n">node</span><span class="p">):</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-25'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-25'>#</a>
+      </div>
+      <p>This string must be UTF-8</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>		<span class="n">return_text</span> <span class="o">=</span> <span class="s">u&#39;&#39;</span>
+		<span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">childNodes</span><span class="p">:</span>
+			<span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">nodeType</span> <span class="o">==</span> <span class="n">child</span><span class="o">.</span><span class="n">TEXT_NODE</span><span class="p">:</span>
+				<span class="n">return_text</span> <span class="o">=</span> <span class="n">return_text</span> <span class="o">+</span> <span class="n">child</span><span class="o">.</span><span class="n">nodeValue</span>
+			<span class="k">else</span><span class="p">:</span>
+				<span class="n">return_text</span> <span class="o">=</span> <span class="n">return_text</span> <span class="o">+</span> <span class="p">(</span><span class="n">flatten_node</span><span class="p">(</span><span class="n">child</span><span class="p">))</span>
+		<span class="k">return</span> <span class="n">return_text</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-26'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-26'>#</a>
+      </div>
+      <p>EPUBs are just zip files, so open it</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>	<span class="n">epub</span> <span class="o">=</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">epub_path</span><span class="p">)</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-27'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-27'>#</a>
+      </div>
+      <p>Per the spec, this file must be here</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>	<span class="n">container_file</span> <span class="o">=</span> <span class="n">epub</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;META-INF/container.xml&#39;</span><span class="p">)</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-28'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-28'>#</a>
+      </div>
+      <p>And it's pretty much the only file whose position we can be sure of</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>	<span class="n">container_dom</span> <span class="o">=</span> <span class="n">parse</span><span class="p">(</span><span class="n">container_file</span><span class="p">)</span> 	</pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-29'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-29'>#</a>
+      </div>
+      <p>But the location of the rootfile (a.k.a .opf file) needs to be determined</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>	<span class="n">rootfile_element</span> <span class="o">=</span> <span class="n">container_dom</span><span class="o">.</span><span class="n">documentElement</span><span class="o">.</span><span class="n">getElementsByTagName</span><span class="p">(</span><span class="s">&#39;rootfile&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> 
+	<span class="n">rootfile_attributes</span> <span class="o">=</span> <span class="p">{</span><span class="n">rootfile_element</span><span class="o">.</span><span class="n">attributes</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">nodeName</span><span class="p">:</span> <span class="n">rootfile_element</span><span class="o">.</span><span class="n">attributes</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">rootfile_element</span><span class="o">.</span><span class="n">attributes</span><span class="o">.</span><span class="n">length</span><span class="p">)}</span>
+
+	<span class="n">rootfile_path</span> <span class="o">=</span> <span class="n">rootfile_attributes</span><span class="p">[</span><span class="s">&#39;full-path&#39;</span><span class="p">]</span> <span class="c"># The path to the .opf content file</span>
+	
+	<span class="n">rootfile</span> <span class="o">=</span> <span class="n">epub</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">rootfile_path</span><span class="p">)</span>
+	<span class="n">rootfile_dom</span> <span class="o">=</span> <span class="n">parse</span><span class="p">(</span><span class="n">rootfile</span><span class="p">)</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-30'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-30'>#</a>
+      </div>
+      <p>Now get a list of all items in the manifest</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>	<span class="n">items</span> <span class="o">=</span> <span class="p">{}</span>
+	<span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">rootfile_dom</span><span class="o">.</span><span class="n">documentElement</span><span class="o">.</span><span class="n">getElementsByTagName</span><span class="p">(</span><span class="s">&#39;item&#39;</span><span class="p">):</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-31'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-31'>#</a>
+      </div>
+      <p>And the attributes of each item</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>		<span class="n">attributes</span> <span class="o">=</span> <span class="p">{</span><span class="n">item</span><span class="o">.</span><span class="n">attributes</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">nodeName</span><span class="p">:</span> <span class="n">item</span><span class="o">.</span><span class="n">attributes</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">attributes</span><span class="o">.</span><span class="n">length</span><span class="p">)}</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-32'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-32'>#</a>
+      </div>
+      <p>Of those attributes, let's keep track of the id and href</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>		<span class="n">items</span><span class="p">[</span><span class="n">attributes</span><span class="p">[</span><span class="s">&#39;id&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">attributes</span><span class="p">[</span><span class="s">&#39;href&#39;</span><span class="p">]</span> 
+	</pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-33'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-33'>#</a>
+      </div>
+      <p>Now we're going to try to get file names for the content XHTML files</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>	<span class="n">file_names</span> <span class="o">=</span> <span class="p">[]</span> 
+	<span class="k">for</span> <span class="n">itemref</span> <span class="ow">in</span> <span class="n">rootfile_dom</span><span class="o">.</span><span class="n">documentElement</span><span class="o">.</span><span class="n">getElementsByTagName</span><span class="p">(</span><span class="s">&#39;itemref&#39;</span><span class="p">):</span> <span class="c"># They&#39;re stored in itemref elements</span>
+		<span class="n">attributes</span> <span class="o">=</span> <span class="p">{</span><span class="n">itemref</span><span class="o">.</span><span class="n">attributes</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">nodeName</span><span class="p">:</span> <span class="n">itemref</span><span class="o">.</span><span class="n">attributes</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">itemref</span><span class="o">.</span><span class="n">attributes</span><span class="o">.</span><span class="n">length</span><span class="p">)}</span>
+
+		<span class="n">file_name</span> <span class="o">=</span> <span class="n">items</span><span class="p">[</span><span class="n">attributes</span><span class="p">[</span><span class="s">&#39;idref&#39;</span><span class="p">]]</span> <span class="c">#  Now, find the id of the element, and get the href of the id of the element. Whew!</span>
+		<span class="n">file_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
+
+	
+	<span class="n">audio_elements</span> <span class="o">=</span> <span class="p">[]</span>
+	<span class="k">for</span> <span class="n">count</span><span class="p">,</span> <span class="n">file_name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">file_names</span><span class="p">):</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-34'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-34'>#</a>
+      </div>
+      <p>Remember, an EPUB is a zip file (and epub is a zipfile.ZipFile)</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>		<span class="n">html_file</span> <span class="o">=</span> <span class="n">epub</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">rootfile_path</span><span class="p">),</span> <span class="n">file_name</span><span class="p">))</span>
+		<span class="n">dom</span> <span class="o">=</span> <span class="n">parse</span><span class="p">(</span><span class="n">html_file</span><span class="p">)</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-35'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-35'>#</a>
+      </div>
+      <p>Get all the divs from the document</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>		<span class="n">divs</span> <span class="o">=</span> <span class="n">dom</span><span class="o">.</span><span class="n">documentElement</span><span class="o">.</span><span class="n">getElementsByTagName</span><span class="p">(</span><span class="s">&#39;div&#39;</span><span class="p">)</span>
+		<span class="k">for</span> <span class="n">div</span> <span class="ow">in</span> <span class="n">divs</span><span class="p">:</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-36'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-36'>#</a>
+      </div>
+      <p>For each div, get its attributes and the text it contains</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>			<span class="n">attributes</span> <span class="o">=</span> <span class="p">{</span><span class="n">div</span><span class="o">.</span><span class="n">attributes</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">nodeName</span><span class="p">:</span> <span class="n">div</span><span class="o">.</span><span class="n">attributes</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">div</span><span class="o">.</span><span class="n">attributes</span><span class="o">.</span><span class="n">length</span><span class="p">)}</span>
+			<span class="n">node_value</span> <span class="o">=</span> <span class="n">flatten_node</span><span class="p">(</span><span class="n">div</span><span class="p">)</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-37'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-37'>#</a>
+      </div>
+      <p>If the div has a class attribute</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>			<span class="k">if</span> <span class="s">&#39;class&#39;</span> <span class="ow">in</span> <span class="n">attributes</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-38'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-38'>#</a>
+      </div>
+      <p>And that class attribute is 'identifiable'</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>				<span class="k">if</span> <span class="n">attributes</span><span class="p">[</span><span class="s">&#39;class&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#39;identifiable&#39;</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-39'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-39'>#</a>
+      </div>
+      <p>Then add it to the list of attributes we're going to return</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>					<span class="n">audio_elements</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s">&#39;id&#39;</span> <span class="p">:</span> <span class="n">attributes</span><span class="p">[</span><span class="s">&#39;id&#39;</span><span class="p">],</span>  <span class="s">&#39;text&#39;</span> <span class="p">:</span> <span class="n">node_value</span><span class="p">,</span> <span class="s">&#39;count&#39;</span> <span class="p">:</span> <span class="n">count</span><span class="p">,</span> <span class="s">&#39;file_name&#39;</span> <span class="p">:</span> <span class="n">file_name</span><span class="p">})</span>
+
+	<span class="k">return</span> <span class="n">audio_elements</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-40'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-40'>#</a>
+      </div>
+      <p>Interactive, pygame-based logging function
+ Don't use mp3s</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="k">def</span> <span class="nf">log</span><span class="p">(</span><span class="n">audio_elements</span><span class="p">,</span> <span class="n">log_file_path</span><span class="p">,</span> <span class="n">audio_file</span><span class="p">,</span> <span class="n">start_pos</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">resume</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-41'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-41'>#</a>
+      </div>
+      <p>Helper functions</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-42'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-42'>#</a>
+      </div>
+      <p>Actually do the logging
+ Get our position in the audio file and the current audio_element (a.k.a. the div in the TEI file)</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>		<span class="n">audio_element</span> <span class="o">=</span> <span class="n">audio_elements</span><span class="p">[</span><span class="n">to</span><span class="p">]</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-43'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-43'>#</a>
+      </div>
+      <p>Tell us what's going on</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>		<span class="k">print</span> <span class="s">&#39;logged at time:&#39;</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="s">&#39;count:&#39;</span><span class="p">,</span> <span class="n">count</span> 
+		<span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">audio_elements</span><span class="p">[</span><span class="n">to</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="s">&#39;text&#39;</span><span class="p">],</span> <span class="s">&#39;(file&#39;</span><span class="p">,</span> <span class="n">audio_elements</span><span class="p">[</span><span class="n">to</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="s">&#39;file_name&#39;</span><span class="p">],</span> <span class="s">&#39;)&#39;</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-44'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-44'>#</a>
+      </div>
+      <p>TEI XML files can have unicode, don'tchaknow
+The values of text_audio_element are being put into the correct order</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>		<span class="n">text_audio_element</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">unicode</span><span class="p">,</span> <span class="p">[</span><span class="n">audio_element</span><span class="p">[</span><span class="s">&#39;id&#39;</span><span class="p">],</span> <span class="n">audio_element</span><span class="p">[</span><span class="s">&#39;text&#39;</span><span class="p">],</span> <span class="n">audio_element</span><span class="p">[</span><span class="s">&#39;file_name&#39;</span><span class="p">],</span> <span class="n">audio_element</span><span class="p">[</span><span class="s">&#39;count&#39;</span><span class="p">]])</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-45'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-45'>#</a>
+      </div>
+      <p>Convert to tab-separated</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>		<span class="n">tabbed_audio_element</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">text_audio_element</span><span class="p">,</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">&#39;</span><span class="p">)</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-46'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-46'>#</a>
+      </div>
+      <p>Remove line breaks</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>		<span class="n">no_line_breaks</span> <span class="o">=</span> <span class="n">tabbed_audio_element</span><span class="o">.</span><span class="n">replace</span> <span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-47'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-47'>#</a>
+      </div>
+      <p>And write it to the file</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>		<span class="n">log</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">prev_pos</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">&#39;</span> <span class="o">+</span> <span class="n">no_line_breaks</span>  <span class="o">+</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+
+		<span class="k">return</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-48'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-48'>#</a>
+      </div>
+      <p>Print a warning message to the log file</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>	<span class="k">def</span> <span class="nf">warn</span><span class="p">(</span><span class="n">warning_message</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;DANGER,&#39;</span><span class="p">,</span> <span class="s">&#39;WILL&#39;</span><span class="p">,</span> <span class="s">&#39;ROBINSON,&#39;</span><span class="p">,</span> <span class="s">&#39;DANGER!&#39;</span><span class="p">]):</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-49'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-49'>#</a>
+      </div>
+      <p>Pretty much as in advance()</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>		<span class="n">pos</span> <span class="o">=</span> <span class="n">mixer</span><span class="o">.</span><span class="n">music</span><span class="o">.</span><span class="n">get_pos</span><span class="p">()</span><span class="o">/</span><span class="mi">1000</span>
+		<span class="n">log</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span>  <span class="o">+</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">&#39;</span>  <span class="o">+</span> <span class="n">string</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">warning_message</span><span class="p">,</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">&#39;</span><span class="p">)</span> <span class="o">+</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+		<span class="k">print</span> <span class="n">warning_string</span><span class="p">,</span> <span class="n">pos</span>
+
+		<span class="k">return</span>
+
+	<span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+	<span class="n">log</span> <span class="o">=</span> <span class="n">codecs</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">log_file_path</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">,</span> <span class="s">&#39;utf-8&#39;</span><span class="p">)</span>
+	<span class="n">paused</span> <span class="o">=</span> <span class="bp">False</span>
+	<span class="n">prev_pos</span> <span class="o">=</span> <span class="mi">0</span>
+	<span class="n">pos</span> <span class="o">=</span> <span class="mi">0</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-50'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-50'>#</a>
+      </div>
+      <p>Initialise pygame</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>	<span class="n">pygame</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+	<span class="n">screen</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">set_mode</span><span class="p">((</span><span class="mi">100</span><span class="p">,</span><span class="mi">100</span><span class="p">))</span>
+	<span class="n">mixer</span><span class="o">.</span><span class="n">music</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">audio_file</span><span class="p">)</span>
+	<span class="n">mixer</span><span class="o">.</span><span class="n">music</span><span class="o">.</span><span class="n">play</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">start_pos</span><span class="p">)</span>
+	<span class="n">mixer</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+	<span class="n">pygame</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">set_grab</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-51'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-51'>#</a>
+      </div>
+      <p>Print some startup info</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>	<span class="k">print</span> <span class="s">&quot;lumberjack: starting to log&quot;</span>
+	<span class="k">print</span> <span class="s">&quot;Press space to log the end of the section displayed on the screen&quot;</span>
+	<span class="k">print</span> <span class="s">&quot;Press q to quit&quot;</span>
+	<span class="k">print</span> <span class="s">&quot;Press p to pause&quot;</span>
+	<span class="k">print</span> <span class="s">&quot;Press any other key to log a warning to file, along with the current timestamp</span><span class="se">\n</span><span class="s">&quot;</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-52'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-52'>#</a>
+      </div>
+      <p>Print some info about the first audio_element</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>	<span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">audio_elements</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s">&#39;text&#39;</span><span class="p">],</span> <span class="s">&#39;(&#39;</span><span class="p">,</span> <span class="n">audio_elements</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s">&#39;)&#39;</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-53'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-53'>#</a>
+      </div>
+      <p>Main logging loop</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>	<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+		<span class="k">if</span> <span class="ow">not</span> <span class="n">key</span><span class="o">.</span><span class="n">get_focused</span><span class="p">():</span> 
+			<span class="n">mixer</span><span class="o">.</span><span class="n">music</span><span class="o">.</span><span class="n">pause</span><span class="p">()</span>
+			<span class="k">while</span> <span class="p">(</span><span class="ow">not</span> <span class="n">key</span><span class="o">.</span><span class="n">get_focused</span><span class="p">()):</span>
+				<span class="n">time</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+				<span class="k">print</span> <span class="s">&quot;Waiting&quot;</span>
+			<span class="n">mixer</span><span class="o">.</span><span class="n">music</span><span class="o">.</span><span class="n">unpause</span><span class="p">()</span>
+
+		<span class="k">else</span><span class="p">:</span>
+			<span class="n">keydown</span> <span class="o">=</span> <span class="p">[</span><span class="n">event</span> <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">pygame</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">KEYDOWN</span><span class="p">]</span>
+			<span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">keydown</span><span class="p">:</span>
+				<span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">key</span> <span class="o">==</span> <span class="n">K_SPACE</span><span class="p">:</span>
+					<span class="n">prev_pos</span> <span class="o">=</span> <span class="n">pos</span>
+					<span class="n">pos</span> <span class="o">=</span> <span class="n">mixer</span><span class="o">.</span><span class="n">music</span><span class="o">.</span><span class="n">get_pos</span><span class="p">()</span>
+					<span class="n">advance</span><span class="p">(</span><span class="n">count</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">prev_pos</span><span class="p">)</span>
+					<span class="n">count</span> <span class="o">=</span> <span class="n">count</span> <span class="o">+</span> <span class="mi">1</span>
+				<span class="k">elif</span> <span class="n">e</span><span class="o">.</span><span class="n">key</span> <span class="o">==</span> <span class="n">K_q</span><span class="p">:</span> 
+					<span class="k">return</span>
+				<span class="k">elif</span>  <span class="n">e</span><span class="o">.</span><span class="n">key</span> <span class="o">==</span> <span class="n">K_p</span><span class="p">:</span>
+					<span class="k">if</span> <span class="ow">not</span> <span class="n">paused</span><span class="p">:</span>
+						<span class="n">mixer</span><span class="o">.</span><span class="n">music</span><span class="o">.</span><span class="n">pause</span><span class="p">()</span>
+					<span class="k">else</span><span class="p">:</span>
+						<span class="n">mixer</span><span class="o">.</span><span class="n">music</span><span class="o">.</span><span class="n">unpause</span><span class="p">()</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-54'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-54'>#</a>
+      </div>
+      <p>paused = !paused</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>					<span class="n">paused</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">paused</span>
+				<span class="k">else</span><span class="p">:</span>
+					<span class="n">warn</span><span class="p">()</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-55'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-55'>#</a>
+      </div>
+      <p>For each filename, we're going to write a SMIL file,
+So get a list of all the filenames
+ Split into a list based on the tab separations</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>	<span class="n">filenames</span> <span class="o">=</span> <span class="p">[</span><span class="n">string</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">log_entry</span><span class="p">,</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">&#39;</span><span class="p">)[</span><span class="mi">4</span><span class="p">]</span> <span class="k">for</span> <span class="n">log_entry</span> <span class="ow">in</span> <span class="n">log_entries</span><span class="p">]</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-56'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-56'>#</a>
+      </div>
+      <p>Remove the "filename" for error messages</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>	<span class="n">actual_filenames</span> <span class="o">=</span> <span class="p">[</span><span class="n">filename</span> <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">filenames</span>  <span class="k">if</span> <span class="n">filename</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">!=</span> <span class="s">&#39;ROBINSON,&#39;</span><span class="p">]</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-57'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-57'>#</a>
+      </div>
+      <p>We only want one of each filename</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>	<span class="n">unique_filenames</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">actual_filenames</span><span class="p">))</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-58'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-58'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>	<span class="k">for</span> <span class="n">smil_file</span> <span class="ow">in</span> <span class="n">unique_filenames</span><span class="p">:</span>
+		<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">smil_path</span> <span class="o">+</span> <span class="n">smil_file</span> <span class="o">+</span> <span class="s">&#39;.smil&#39;</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span>
+		<span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">)</span>
+		<span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-59'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-59'>#</a>
+      </div>
+      <p>Write the bit of the SMIL file that comes before the entries
+ Yes, it's a hack.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>		<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">smil_path</span> <span class="o">+</span> <span class="n">smil_file</span> <span class="o">+</span> <span class="s">&#39;.smil&#39;</span><span class="p">,</span> <span class="s">&#39;a&#39;</span><span class="p">)</span>
+		<span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;&lt;smil xmlns=&quot;http://www.w3.org/ns/SMIL&quot; version=&quot;3.0&quot; profile=&quot;http://www.ipdf.org/epub/30/profile/content/&quot;&gt;</span><span class="se">\n</span><span class="s"> &lt;body&gt; </span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-60'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-60'>#</a>
+      </div>
+      <p>Each clip has an id attribute of the form 'audio-filename-N', where N is
+ the number of the clip in the file</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>		<span class="n">log_entries_in_this_file</span> <span class="o">=</span> <span class="p">[</span><span class="n">log_entry</span> <span class="k">for</span> <span class="n">log_entry</span> <span class="ow">in</span> <span class="n">log_entries</span> <span class="k">if</span> <span class="n">string</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">log_entry</span><span class="p">,</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">&#39;</span><span class="p">)[</span><span class="mi">4</span><span class="p">]</span> <span class="o">==</span> <span class="n">smil_file</span><span class="p">]</span>
+		<span class="k">for</span> <span class="n">clip_id</span><span class="p">,</span> <span class="n">log_text</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">log_entries_in_this_file</span><span class="p">):</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-61'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-61'>#</a>
+      </div>
+      <p>Because it's a tsv file</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>			<span class="n">log</span> <span class="o">=</span> <span class="n">log_text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\t</span><span class="s">&#39;</span><span class="p">)</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-62'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-62'>#</a>
+      </div>
+      <p>Warnings in the logfile are detected because their third column is 'DANGER,'</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>			<span class="k">if</span> <span class="n">log</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">!=</span> <span class="s">&#39;DANGER,&#39;</span><span class="p">:</span>
+				<span class="n">log_id</span><span class="p">,</span> <span class="n">log_file_path</span><span class="p">,</span> <span class="n">clip_begin</span><span class="p">,</span> <span class="n">clip_end</span> <span class="o">=</span> <span class="n">log</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">log</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">log</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">log</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+				<span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;&lt;par id=&quot;</span><span class="si">%s</span><span class="s">&quot;&gt; &lt;text src=&quot;</span><span class="si">%s</span><span class="s">&quot;/&gt; &lt;audio src=&quot;</span><span class="si">%s</span><span class="s">&quot; clipBegin=&quot;</span><span class="si">%s</span><span class="s">s&quot; clipEnd=&quot;</span><span class="si">%s</span><span class="s">s&quot;/&gt; &lt;/par&gt;</span><span class="se">\n</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="s">&#39;audio-&#39;</span> <span class="o">+</span> <span class="n">smil_file</span><span class="p">[:</span><span class="o">-</span><span class="mi">5</span><span class="p">]</span> <span class="o">+</span> <span class="s">&#39;-&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">clip_id</span><span class="p">),</span> <span class="n">log_file_path</span> <span class="o">+</span> <span class="s">&#39;#&#39;</span> <span class="o">+</span> <span class="n">log_id</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">audio_file</span><span class="p">),</span> <span class="n">clip_begin</span><span class="p">,</span> <span class="n">clip_end</span><span class="p">))</span>
+			<span class="k">else</span><span class="p">:</span>
+				<span class="k">print</span> <span class="s">&quot;Invalid log&quot;</span><span class="p">,</span> <span class="n">log_text</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-63'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-63'>#</a>
+      </div>
+      <pre><code>print clip_id, log
+</code></pre>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>		<span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s"> &lt;/body&gt; </span><span class="se">\n</span><span class="s"> &lt;/smil&gt;&#39;</span><span class="p">)</span>
+		<span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-64'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-64'>#</a>
+      </div>
+      <p>For each filename, we're going to write a SMIL file,
+So get a list of all the filenames
+ Split into a list based on the tab separations
+ Remove the "filename" for error messages
+ We only want one of each filename</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-65'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-65'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>	<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">smil_path</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span>
+	<span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">)</span>
+	<span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-66'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-66'>#</a>
+      </div>
+      <p>Write the bit of the SMIL file that comes before the entries
+ Yes, it's a hack.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>	<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">smil_path</span><span class="p">,</span> <span class="s">&#39;a&#39;</span><span class="p">)</span>
+	<span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;&lt;TEI&gt;</span><span class="se">\n</span><span class="s"> &lt;timeline xml:id=&quot;timeline&quot; unit=&quot;s&quot; corresp=&quot;</span><span class="si">%s</span><span class="s">&quot;&gt; </span><span class="se">\n</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">audio_file</span><span class="p">)</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-67'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-67'>#</a>
+      </div>
+      <p>Each clip has an id attribute of the form 'audio-filename-N', where N is
+ the number of the clip in the file</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>	<span class="k">for</span> <span class="n">clip_id</span><span class="p">,</span> <span class="n">log_text</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">log_entries</span><span class="p">):</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-68'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-68'>#</a>
+      </div>
+      <p>Because it's a tsv file</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>		<span class="n">log</span> <span class="o">=</span> <span class="n">log_text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\t</span><span class="s">&#39;</span><span class="p">)</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-69'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-69'>#</a>
+      </div>
+      <p>Warnings in the logfile are detected because their third column is 'DANGER,'</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>		<span class="k">if</span> <span class="n">log</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">!=</span> <span class="s">&#39;DANGER,&#39;</span><span class="p">:</span>
+			<span class="n">log_id</span><span class="p">,</span> <span class="n">log_file_path</span><span class="p">,</span> <span class="n">clip_begin</span><span class="p">,</span> <span class="n">clip_end</span> <span class="o">=</span> <span class="n">log</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">log</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">log</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">log</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+			<span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;&lt;when xml:id=&quot;</span><span class="si">%s</span><span class="s">&quot; corresp=&quot;</span><span class="si">%s</span><span class="s">&quot; from=&quot;</span><span class="si">%s</span><span class="s">&quot; to=&quot;</span><span class="si">%s</span><span class="s">&quot;/&gt;</span><span class="se">\n</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="s">&#39;audio-&#39;</span><span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">clip_id</span><span class="p">),</span> <span class="n">log_id</span><span class="p">,</span> <span class="n">clip_begin</span><span class="p">,</span> <span class="n">clip_end</span><span class="p">))</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="k">print</span> <span class="s">&quot;Invalid log&quot;</span><span class="p">,</span> <span class="n">log_text</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-70'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-70'>#</a>
+      </div>
+      <pre><code>print clip_id, log
+</code></pre>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>	<span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s"> &lt;/timeline&gt; </span><span class="se">\n</span><span class="s"> &lt;/TEI&gt;&#39;</span><span class="p">)</span>
+	<span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-71'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-71'>#</a>
+      </div>
+      <p>Setup a parser for command-line arguments</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>	<span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s">&quot;Produce a smil file linking positions in an audio file to sections of an EPUB&quot;</span><span class="p">)</span>
+	<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;epub&#39;</span><span class="p">)</span>
+	<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;audio&#39;</span><span class="p">)</span>
+	<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;--smilpath&#39;</span><span class="p">)</span>
+	<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;--timeline&#39;</span><span class="p">)</span>
+	<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;--logto&#39;</span><span class="p">)</span>
+	<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;--uselog&#39;</span><span class="p">)</span>
+
+	<span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+	<span class="n">epub_folder</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">epub</span>
+	<span class="n">audio_file</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">audio</span>
+	<span class="n">smil_path</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">smilpath</span>
+	<span class="n">timeline</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">timeline</span>
+	<span class="n">log_to</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">logto</span>
+	<span class="n">smil_file</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">smilpath</span>
+	<span class="n">use_log</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">uselog</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-72'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-72'>#</a>
+      </div>
+      <p>If filenames for the log and SMIL files have not been provided, choose some</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>	<span class="k">if</span> <span class="ow">not</span> <span class="n">log_to</span><span class="p">:</span> <span class="n">log_to</span> <span class="o">=</span> <span class="n">audio_file</span> <span class="o">+</span> <span class="s">&#39;.log&#39;</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-73'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-73'>#</a>
+      </div>
+      <p>Get the <div>s susceptible of being logged</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>	<span class="n">audio_elements</span> <span class="o">=</span> <span class="n">get_audio_elements</span><span class="p">(</span><span class="n">epub_folder</span><span class="p">)</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-74'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-74'>#</a>
+      </div>
+      <p>ogg file because pygame doesn't support m4a</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>	<span class="n">ogg_file</span> <span class="o">=</span> <span class="n">audio_file</span><span class="p">[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="s">&#39;ogg&#39;</span> </pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-75'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-75'>#</a>
+      </div>
+      <p>If an existing log file has been provided</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>	<span class="k">if</span> <span class="n">use_log</span><span class="p">:</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-76'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-76'>#</a>
+      </div>
+      <p>Just make the SMIL file based on it</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>		<span class="n">log_to</span> <span class="o">=</span> <span class="n">use_log</span>
+	<span class="k">else</span><span class="p">:</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-77'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-77'>#</a>
+      </div>
+      <p>Otherwise, begin the interactive logging process</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>		<span class="n">log</span><span class="p">(</span><span class="n">audio_elements</span><span class="p">,</span> <span class="n">log_to</span><span class="p">,</span> <span class="n">ogg_file</span><span class="p">)</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-78'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-78'>#</a>
+      </div>
+      <p>Either way make the SMIL/XML file based on the log file</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>	<span class="k">if</span> <span class="n">smil_path</span><span class="p">:</span>
+		<span class="n">make_smil</span><span class="p">(</span><span class="n">log_to</span><span class="p">,</span> <span class="n">smil_path</span><span class="p">,</span> <span class="n">audio_file</span><span class="p">)</span>
+	<span class="k">elif</span> <span class="n">timeline</span><span class="p">:</span>
+		<span class="n">make_tei</span><span class="p">(</span><span class="n">log_to</span><span class="p">,</span> <span class="n">timeline</span><span class="p">,</span> <span class="n">audio_file</span><span class="p">)</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-79'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-79'>#</a>
+      </div>
+      <p>Run the script</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+	<span class="n">main</span><span class="p">()</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-80'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-80'>#</a>
+      </div>
+      <p>Documentation generated using <a href="http://fitzgen.github.com/pycco/">Pycco</a></p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-81'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-81'>#</a>
+      </div>
+      <p>== References ==</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div><div class='section' id='section-82'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-82'>#</a>
+      </div>
+      <p>http://docs.python.org/library/argparse.html#module-argparse
+ http://docs.python.org/tutorial/inputoutput.html
+ http://infohost.nmt.edu/tcc/help/pubs/lang/pytut/str-format.html
+ http://docs.python.org/library/string.html
+ http://docs.python.org/library/functions.html#map
+ http://www.evanjones.ca/python-utf8.html
+ http://www.java2s.com/Open-Source/Python/Game-2D-3D/Pygame/pygame-1.9.1release/examples/sound.py.htm
+ http://stackoverflow.com/questions/934160/write-to-utf-8-file-in-python
+ http://www.pygame.org/docs/ref/examples.html#pygame.examples.scroll.main
+ https://secure.wikimedia.org/wikipedia/en/wiki/Switch_statement#Python
+ http://docs.python.org/tutorial/controlflow.html
+http://docs.python.org/library/stdtypes.html
+http://www.velocityreviews.com/forums/t639597-append-a-new-value-to-dict.html
+http://docs.python.org/library/os.path.html
+http://docs.python.org/library/string.html
+http://stackoverflow.com/questions/1412004/reading-xml-using-python-minidom-and-iterating-over-each-node
+ http://docs.python.org/library/zipfile.html
+http://docs.python.org/library/os.path.html#module-os.path</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+</div>
+</body>
